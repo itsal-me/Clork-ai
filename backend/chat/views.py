@@ -96,7 +96,7 @@ class ChatView(APIView):
                 return JsonResponse({'error': 'No response from the model'}, status=500)
 
         except requests.exceptions.RequestException as e:
-            # Handle errors (e.g., network issues, Colab API not responding)
+   
             return JsonResponse({'error': str(e)}, status=500)
 
         Chat.objects.create(user=request.user, user_input=user_input, chat_response=chat_response)
