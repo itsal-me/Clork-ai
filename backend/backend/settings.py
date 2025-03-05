@@ -120,9 +120,24 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 
+# DATABASES = {
+#     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+# }
+
+
+
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',  # Default database name
+        'USER': os.getenv('DB_USER'),    # Default user
+        'PASSWORD': os.getenv('DB_PASSWORD'),  # Password from Supabase
+        'HOST': os.getenv('DB_HOST'),  # Supabase host
+        'PORT': os.getenv('DB_PORT'),  # Default PostgreSQL port
+    }
 }
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
