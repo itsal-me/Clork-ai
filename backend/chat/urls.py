@@ -2,11 +2,12 @@ from django.urls import path
 from . import views
 
 from rest_framework_simplejwt.views import (
-    TokenObtainPairView,  # For obtaining access and refresh tokens
-    TokenRefreshView,  # For refreshing access tokens
+    # TokenObtainPairView,  # For obtaining access and refresh tokens
+    # TokenRefreshView,  # For refreshing access tokens
     TokenVerifyView,  # For verifying tokens
 )
 
+from chat.views import CustomTokenObtainPairView, CustomTokenRefreshView
 
 urlpatterns = [
     path('register/', views.RegisterView.as_view(), name='register'),
@@ -17,8 +18,8 @@ urlpatterns = [
     path('chat/history/', views.ChatHistoryView.as_view(), name='history'),
     # path('chat/history/<int:id>/', views.history, name='history'),
 
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 
 ]

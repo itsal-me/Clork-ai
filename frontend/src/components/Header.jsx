@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Header({ isLoggedIn, setIsLoggedIn }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Remove the token
+    localStorage.removeItem('access_token'); // Remove the token
+    localStorage.removeItem('refresh_token'); // Remove the refresh token
+    localStorage.removeItem('username'); // Remove the username
+    delete axios.defaults.headers.common['Authorization']; // Remove the token from axios headers
     setIsLoggedIn(false); // Update login state
     navigate('/login'); // Redirect to login page
   };

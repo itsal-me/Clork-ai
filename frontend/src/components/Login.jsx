@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function Login({ setIsLoggedIn }) {
+function Login({ setIsLoggedIn, startTokenRefreshTimer }) {
 
   const VITE_API_URL = import.meta.env.VITE_API_URL;
 
@@ -18,8 +18,15 @@ function Login({ setIsLoggedIn }) {
         username,
         password,
       });
-      localStorage.setItem('token', response.data.access); // Store the token
+      localStorage.setItem('access_token', response.data.access);
+      localStorage.setItem('refresh_token', response.data.refresh);
+       // Store the token in local storage
+
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
+
       setIsLoggedIn(true);
+      localStorage.setItem('username', username);
+      startTokenRefreshTimer(response.data.access_expires);
       navigate('/chat'); // Redirect to chat page
     } catch (err) {
       setError('Invalid username or password');

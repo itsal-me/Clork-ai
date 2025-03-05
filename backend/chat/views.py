@@ -16,6 +16,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.tokens import AccessToken
 
 
 class RegisterView(APIView):
@@ -58,6 +60,20 @@ class LogoutView(APIView):
         
 
 
+class CustomTokenObtainPairView(TokenObtainPairView):
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)  # Get the default token response
+        access_token = AccessToken(response.data['access'])  # Decode the access token
+        response.data['access_expires'] = access_token['exp']  # Add the expiration time
+        return response
+
+class CustomTokenRefreshView(TokenRefreshView):
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)  # Get the default token response
+        access_token = AccessToken(response.data['access'])  # Decode the new access token
+        response.data['access_expires'] = access_token['exp']  # Add the expiration time
+        return response
+
 
 class ChatView(APIView):
     permission_classes = [IsAuthenticated]
@@ -90,8 +106,7 @@ class ChatView(APIView):
         
         try:
 
-            chat_response = response.json()['choices'][0]['message']['content']
-            
+            chat_response = response.json()
             if not chat_response:
                 return JsonResponse({'error': 'No response from the model'}, status=500)
 

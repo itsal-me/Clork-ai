@@ -184,14 +184,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Simple JWT settings
 
 SIMPLe_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),  # Access token valid for 60 minutes
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Access token valid for 60 minutes
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # Refresh token valid for 1 day
     'ROTATE_REFRESH_TOKENS': True,  # Whether to rotate refresh tokens
     'BLACKLIST_AFTER_ROTATION': True,  # Blacklist old tokens after rotation
-    'UPDATE_LAST_LOGIN': False,  # Whether to update the user's last_login field
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),  # Token classes
-    'AUTH_HEADER_TYPES': ('Bearer',),
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
-    'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
+    'UPDATE_LAST_LOGIN': True,  # Whether to update the user's last_login field
 }

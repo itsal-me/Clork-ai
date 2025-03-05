@@ -13,12 +13,12 @@ function Chat() {
 
   const navigate = useNavigate();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            navigate('/login');
-        }
-        }, [navigate]);
+  useEffect(() => {
+      const token = localStorage.getItem('access_token');
+      if (!token) {
+          navigate('/login');
+      }
+      }, [navigate]);
 
         
   const handleSend = async (e) => {
@@ -27,15 +27,15 @@ function Chat() {
     setIsLoading(true);
   
     try {
-      const token = localStorage.getItem("token");
-      console.log(token);
+      const token = localStorage.getItem("access_token");
+
       const response = await axios.post(
         `${VITE_API_URL}/chat/`,
         { user_input: input },
         { headers: { Authorization: `Bearer ${token}` } }
       );
   
-      setMessages([...messages, { user: input, chat: response.data.chat_response }]);
+      setMessages([...messages, { user: input, chat: response.data.chat_response.choices[0].message.content, timestamp: Date.now() }]);
       setInput("");
     } catch (error) {
       console.error("Error sending message:", error);
@@ -52,7 +52,7 @@ function Chat() {
         <div className="h-96 overflow-y-auto mb-4 border p-4 rounded bg-gray-50">
           {messages.map((msg, index) => (
             <div key={index} className="mb-4">
-              <p className="text-left"><strong>User:</strong> <br />{msg.user}</p>
+              <p className="text-left"><strong>{localStorage.getItem('username')}:</strong> <br />{msg.user}</p>
               <p className="text-right"><strong>Clork:</strong> <br />{msg.chat}</p>
               <p className="text-sm text-gray-500">{new Date(msg.timestamp).toLocaleTimeString()}</p>
             </div>
@@ -76,7 +76,8 @@ function Chat() {
           <button
             type="submit"
             onClick={handleSend}
-            className="bg-blue-600 text-white p-2 rounded-r hover:bg-blue-700"
+            className="bg-blue-600 text-white p-2 rounded-r hover:bg-blue-700 disabled:bg-blue-400"
+            disabled={isLoading}
           >
             Send
           </button>
