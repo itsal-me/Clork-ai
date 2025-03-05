@@ -9,6 +9,8 @@ function Chat() {
 
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,6 +23,8 @@ function Chat() {
         
   const handleSend = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true);
   
     try {
       const token = localStorage.getItem("token");
@@ -35,6 +39,8 @@ function Chat() {
       setInput("");
     } catch (error) {
       console.error("Error sending message:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
   
@@ -51,6 +57,13 @@ function Chat() {
               <p className="text-sm text-gray-500">{new Date(msg.timestamp).toLocaleTimeString()}</p>
             </div>
           ))}
+
+          {/* Show "Thinking..." while loading */}
+          {isLoading && (
+            <div className="mb-4">
+              <p className="text-gray-500 italic">Thinking...</p>
+            </div>
+          )}
         </div>
         <form className="flex">
           <input
