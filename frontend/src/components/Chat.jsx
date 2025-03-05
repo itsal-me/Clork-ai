@@ -35,7 +35,7 @@ function Chat() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
   
-      setMessages([...messages, { user: input, chat: response.data.chat_response.choices[0].message.content, timestamp: Date.now() }]);
+      setMessages([...messages, { user: input, chat: response.data.chat_response, timestamp: Date.now() }]);
       setInput("");
     } catch (error) {
       console.error("Error sending message:", error);
@@ -76,7 +76,7 @@ function Chat() {
           <button
             type="submit"
             onClick={handleSend}
-            className="bg-blue-600 text-white p-2 rounded-r hover:bg-blue-700 disabled:bg-blue-400"
+            className="bg-blue-600 text-white p-2 rounded-r hover:bg-blue-700 disabled:bg-gray-300"
             disabled={isLoading}
           >
             Send

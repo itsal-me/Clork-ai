@@ -52,7 +52,6 @@ function App() {
 
       // Decode the access token to get the expiration time
       const payload = JSON.parse(atob(accessToken.split('.')[1]));
-      console.log(payload);
       expiresAt = payload.exp * 1000; // Convert to milliseconds
     }
     
@@ -65,7 +64,7 @@ function App() {
     const refreshTime = timeRemaining - 1 * 60 * 1000; // 1 minutes before expiry
 
     if (refreshTime > 0) {
-      console.log(`Token will refresh in ${refreshTime / 1000} seconds`);
+      // Set a timeout to refresh the token
       setTimeout(refreshAccessToken, refreshTime);
     } else {
       // If the token is already expired, refresh it immediately

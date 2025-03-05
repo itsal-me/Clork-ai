@@ -106,7 +106,8 @@ class ChatView(APIView):
         
         try:
 
-            chat_response = response.json()
+            chat_response = response.json()['choices'][0]['message']['content']
+            
             if not chat_response:
                 return JsonResponse({'error': 'No response from the model'}, status=500)
 
