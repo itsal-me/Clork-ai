@@ -76,7 +76,7 @@ function Chat() {
           <button
             type="submit"
             onClick={handleSend}
-            className="bg-blue-600 text-white p-2 rounded-r hover:bg-blue-700 disabled:bg-gray-300"
+            className="bg-blue-600 text-white p-2 rounded-r hover:bg-blue-700 disabled:bg-gray-400"
             disabled={isLoading}
           >
             Send
