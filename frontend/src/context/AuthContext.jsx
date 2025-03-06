@@ -45,7 +45,6 @@ export const AuthProvider = ({ children }) => {
 
             startTokenRefreshTimer(access_expires * 1000); // Convert to milliseconds
         } catch (err) {
-            console.error("Error refreshing token:", err);
             logout();
         }
     };
@@ -85,7 +84,7 @@ export const AuthProvider = ({ children }) => {
             return {
                 success: false,
                 error: err.response?.data || {
-                    error: "An error occurred, Login failed",
+                    detail: "An error occurred, Login failed",
                 },
             };
         }

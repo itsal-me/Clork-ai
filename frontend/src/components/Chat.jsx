@@ -195,7 +195,7 @@ function Chat() {
                         </div>
                     </div>
                 ) : (
-                    <div className="space-y-4 w-[1200px] mx-auto">
+                    <div className="space-y-4 w-[calc(100%-60px)] mx-auto">
                         {messages.map((message) => (
                             <div key={message.id} className="flex flex-col">
                                 {message.user ? (
@@ -289,7 +289,7 @@ function Chat() {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Ask Clork anything..."
-                            className="w-full p-3 pr-12 rounded-full border border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white text-gray-800 placeholder-gray-500"
+                            className="w-full p-3 pr-12 rounded-full border border-purple-300 focus:outline-none bg-white text-gray-800 placeholder-gray-500"
                             disabled={isLoading}
                         />
                     </div>

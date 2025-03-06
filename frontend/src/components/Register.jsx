@@ -29,6 +29,7 @@ function Register() {
             navigate("/login");
         } else {
             setError(result.error);
+            console.log(result.error);
         }
         setIsLoading(false);
     };

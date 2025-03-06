@@ -21,6 +21,7 @@ function Login() {
             navigate("/chat");
         } else {
             setError(result.error);
+            console.log(result.error);
         }
         setIsLoading(false);
     };
@@ -36,14 +37,14 @@ function Login() {
                         <h1 className="mt-2 text-2xl font-bold text-gray-800">
                             Welcome to Clork
                         </h1>
-                        <p className="mt-2 text-gray-600">
+                        <p className="mt-2 mb-2 text-gray-600">
                             Sign in to continue your conversation
                         </p>
                     </div>
 
                     {error && (
                         <div className="p-3 text-sm text-red-600 bg-red-50 rounded-md">
-                            {error.error}
+                            {error.detail}
                         </div>
                     )}
 

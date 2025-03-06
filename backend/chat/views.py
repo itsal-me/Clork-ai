@@ -26,14 +26,14 @@ class RegisterView(APIView):
         password=request.data.get('password')
 
         if not username or not password:
-            return Response({'error': 'Username and password are required.'}, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({'error': 'Username and password are required.'}, status=status.HTTP_400_BAD_REQUEST)
         
         if User.objects.filter(username=username).exists():
-            return Response({'error': 'Username already exists.'}, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({'error': 'Username already exists.'}, status=status.HTTP_400_BAD_REQUEST)
 
         user = User.objects.create_user(username=username, password=password)
         refresh = RefreshToken.for_user(user)
-        return Response({'refresh': str(refresh), 'access': str(refresh.access_token)}, status=status.HTTP_201_CREATED)
+        return JsonResponse({'refresh': str(refresh), 'access': str(refresh.access_token)}, status=status.HTTP_201_CREATED)
 
 
 
@@ -45,8 +45,8 @@ class LoginView(APIView):
 
         if user:
             refresh = RefreshToken.for_user(user)
-            return Response({'refresh': str(refresh), 'access': str(refresh.access_token)}, status=status.HTTP_200_OK)
-        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+            return JsonResponse({'refresh': str(refresh), 'access': str(refresh.access_token)}, status=status.HTTP_200_OK)
+        return JsonResponse({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class LogoutView(APIView):
     def post(self, request):
@@ -54,9 +54,9 @@ class LogoutView(APIView):
             refresh_token = request.data.get('refresh')
             token = RefreshToken(refresh_token)
             token.blacklist()
-            return Response({'success': 'Successfully logged out'}, status=status.HTTP_200_OK)
+            return JsonResponse({'success': 'Successfully logged out'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
         
 
 
@@ -128,4 +128,4 @@ class ChatHistoryView(APIView):
     def get(self, request):
         chat = Chat.objects.filter(user=request.user).values('user_input', 'chat_response', 'timestamp').order_by('-timestamp')
         chat_history = [{'user_input': c['user_input'], 'chat_response': c['chat_response'], 'timestamp': c['timestamp']} for c in chat]
-        return Response({'chat_history': chat_history}, status=status.HTTP_200_OK)
+        return JsonResponse({'chat_history': chat_history}, status=status.HTTP_200_OK)
