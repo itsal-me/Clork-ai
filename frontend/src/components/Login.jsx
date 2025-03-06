@@ -21,7 +21,6 @@ function Login() {
             navigate("/chat");
         } else {
             setError(result.error);
-            console.log(result.error);
         }
         setIsLoading(false);
     };
