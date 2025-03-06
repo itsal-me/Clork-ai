@@ -123,7 +123,10 @@ function Chat() {
     };
 
     return (
-        <div className="flex flex-col h-screen bg-gradient-to-br from-purple-50 to-purple-100">
+        <div
+            className="flex flex-col h-screen animate-gradient bg-gradient-to-r from-orange-100 via-red-50 to-pink-100 bg-[size:200%_200%]
+"
+        >
             {/* Header */}
 
             <header className="flex items-center justify-between p-2 border-b border-purple-200">
@@ -148,7 +151,7 @@ function Chat() {
             {/* Chat container */}
             <div className="flex-1 overflow-y-auto p-4">
                 {messages.length === 0 ? (
-                    <div className="w-[1220px] mx-auto h-[480px] flex flex-col items-center justify-center text-center">
+                    <div className="w-[calc(100%-60px)] mx-auto h-[calc(100%*2)]] flex flex-col items-center justify-center text-center">
                         <div className="p-4 mb-4">
                             <img
                                 src="/assets/clork-logo.png"
@@ -269,7 +272,7 @@ function Chat() {
             </div>
 
             {/* Input area */}
-            <div className="w-[1240px] mx-auto rounded-lg mb-6 shadow-lg p-4 border-t border-purple-200 bg-white">
+            <div className="w-[calc(100%-40px)] mx-auto rounded-xl mb-6 shadow-lg p-4 border-t border-purple-200 bg-white">
                 <form
                     onSubmit={handleSend}
                     className="flex items-center space-x-2"
