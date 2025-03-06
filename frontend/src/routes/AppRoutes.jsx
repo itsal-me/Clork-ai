@@ -9,7 +9,7 @@ const AppRoutes = () => {
     const { isAuthenticated, loading } = useAuth();
 
     if (loading) {
-        return <Loader2 className="w-4 h-4 text-purple-500 animate-spin" /> // Prevents flickering on refresh
+        return <Loader2 className="w-4 h-4 text-purple-500 animate-spin" />; // Prevents flickering on refresh
     }
 
     return (
@@ -24,7 +24,10 @@ const AppRoutes = () => {
                 <>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="*" element={<Navigate to="/login" replace />} />
+                    <Route
+                        path="*"
+                        element={<Navigate to="/login" replace />}
+                    />
                 </>
             )}
         </Routes>
