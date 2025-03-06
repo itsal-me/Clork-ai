@@ -33,7 +33,7 @@ function Login() {
                         <div className="inline-flex items-center justify-center w-12 h-12">
                             <img src="/assets/clork-logo-blue.png" alt="" />
                         </div>
-                        <h1 className="mt-4 text-2xl font-bold text-gray-800">
+                        <h1 className="mt-2 text-2xl font-bold text-gray-800">
                             Welcome to Clork
                         </h1>
                         <p className="mt-2 text-gray-600">
@@ -47,7 +47,7 @@ function Login() {
                         </div>
                     )}
 
-                    <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+                    <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
                         <div>
                             <label
                                 htmlFor="username"
