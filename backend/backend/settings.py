@@ -110,12 +110,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 
@@ -126,16 +126,16 @@ DATABASES = {
 
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',  # Default database name
-#         'USER': os.getenv('DB_USER'),    # Default user
-#         'PASSWORD': os.getenv('DB_PASSWORD'),  # Password from Supabase
-#         'HOST': os.getenv('DB_HOST'),  # Supabase host
-#         'PORT': os.getenv('DB_PORT'),  # Default PostgreSQL port
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',  # Default database name
+        'USER': os.getenv('DB_USER'),    # Default user
+        'PASSWORD': os.getenv('DB_PASSWORD'),  # Password from Supabase
+        'HOST': os.getenv('DB_HOST'),  # Supabase host
+        'PORT': os.getenv('DB_PORT'),  # Default PostgreSQL port
+    }
+}
 
 
 
