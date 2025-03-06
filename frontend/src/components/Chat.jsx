@@ -10,6 +10,7 @@ function Chat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ function Chat() {
     setIsLoading(true);
   
     try {
+      setError(null);
       const token = localStorage.getItem("access_token");
 
       const response = await axios.post(
@@ -37,8 +39,23 @@ function Chat() {
   
       setMessages([...messages, { user: input, chat: response.data.chat_response, timestamp: Date.now() }]);
       setInput("");
-    } catch (error) {
-      console.error("Error sending message:", error);
+    } catch (err) {
+      // if (err.response.status === 401) {
+      //   setError({ message: "Unauthorized" });
+      //   navigate("/login");
+      // }
+      // else if (err.response.status === 403) {
+      //   setError({ message: "Forbidden" });
+      //   navigate("/login");
+      // }
+      // else if (err.response.status === 500) {
+      //   setError({ message: "Internal Server Error" });
+      // }
+      // else {
+      //   setError(err.response.data);
+      // }
+
+      setError(err.response);
     } finally {
       setIsLoading(false);
     }
@@ -58,12 +75,20 @@ function Chat() {
             </div>
           ))}
 
+          {/* Show error message if there is an error */}
+          {error && (
+            <div className="mb-4">
+              <p className="text-gray-500 italic">{error.data.error}</p>
+              <p className="text-gray-500 italic">{error.statusText}</p>
+            </div>
+          )}
           {/* Show "Thinking..." while loading */}
           {isLoading && (
             <div className="mb-4">
               <p className="text-gray-500 italic">Thinking...</p>
             </div>
           )}
+
         </div>
         <form className="flex">
           <input
@@ -76,7 +101,7 @@ function Chat() {
           <button
             type="submit"
             onClick={handleSend}
-            className="bg-blue-600 text-white p-2 rounded-r hover:bg-blue-700 disabled:bg-gray-400"
+            className="bg-blue-600 text-white p-2 rounded-r hover:bg-blue-700 disabled:bg-blue-300"
             disabled={isLoading}
           >
             Send

@@ -9,11 +9,14 @@ function Login({ setIsLoggedIn, startTokenRefreshTimer }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
+
       const response = await axios.post(`${VITE_API_URL}/token/`, {
         username,
         password,
@@ -29,14 +32,16 @@ function Login({ setIsLoggedIn, startTokenRefreshTimer }) {
       startTokenRefreshTimer(response.data.access_expires);
       navigate('/chat'); // Redirect to chat page
     } catch (err) {
-      setError('Invalid username or password');
+      setError(err.response.data);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <h1 className="text-2xl font-bold mb-4">Login</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
+      {error && <p className="text-red-500 mb-4">{error.error}</p>}
       <form onSubmit={handleLogin} className="bg-white p-6 rounded shadow-md w-80">
         <input
           type="text"
@@ -56,9 +61,10 @@ function Login({ setIsLoggedIn, startTokenRefreshTimer }) {
         />
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 disabled:bg-blue-300"
+          disabled={isLoading}
         >
-          Login
+          {isLoading ? 'Logging in...' : 'Login'} 
         </button>
       </form>
     </div>
