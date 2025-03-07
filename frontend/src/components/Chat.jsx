@@ -14,6 +14,11 @@ import {
     Check,
 } from "lucide-react";
 
+import { marked } from "marked";
+import DOMPurify from "dompurify";
+import hljs from "highlight.js";
+import "highlight.js/styles/github-dark.css";
+
 function Chat() {
     const VITE_API_URL = import.meta.env.VITE_API_URL;
 
@@ -84,6 +89,15 @@ function Chat() {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
+            // Configure Marked for Syntax Highlighting
+            marked.setOptions({
+                highlight: function (code, lang) {
+                    return hljs.highlightAuto(code).value; // Auto-detect language
+                },
+                breaks: true, // Enable line breaks
+                gfm: true, // GitHub Flavored Markdown
+            });
+
             setMessages((prev) => [
                 ...prev,
                 {
@@ -149,9 +163,9 @@ function Chat() {
             </header>
 
             {/* Chat container */}
-            <div className="flex-1 overflow-y-auto p-4">
+            <div className="flex-1 overflow-y-auto p-4 max-sm:p-1">
                 {messages.length === 0 ? (
-                    <div className="w-[calc(100%-50px)] mx-auto h-[calc(100%*2)]] flex flex-col items-center justify-center text-center">
+                    <div className="w-[calc(100%-60px)] max-sm:w-[calc(100%-30px)] mx-auto h-[calc(100%*2)]] flex flex-col items-center justify-center text-center">
                         <div className="p-4 mb-4">
                             <img
                                 src="/assets/clork-logo.png"
@@ -195,7 +209,7 @@ function Chat() {
                         </div>
                     </div>
                 ) : (
-                    <div className="space-y-4 w-[calc(100%-50px)] mx-auto">
+                    <div className="space-y-4 w-[calc(100%-60px)] max-sm:w-[calc(100%-30px)] mx-auto">
                         {messages.map((message) => (
                             <div key={message.id} className="flex flex-col">
                                 {message.user ? (
@@ -211,10 +225,15 @@ function Chat() {
                                     </div>
                                 ) : (
                                     <div className="flex mb-2">
-                                        <div className="bg-white text-gray-800 p-3 rounded-lg rounded-tl-none max-w-[94%] shadow-sm relative group border border-purple-200">
-                                            <p className="whitespace-pre-wrap">
-                                                {message.chat}
-                                            </p>
+                                        <div className="bg-white text-gray-800 p-3 rounded-lg rounded-tl-none max-w-[97%] max-sm:max-w-[100%] shadow-sm relative group border border-purple-200">
+                                            <div
+                                                className="whitespace-pre-wrap"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: DOMPurify.sanitize(
+                                                        marked(message.chat)
+                                                    ),
+                                                }}
+                                            ></div>
                                             <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <button
                                                     onClick={() =>
