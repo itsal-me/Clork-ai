@@ -9,6 +9,8 @@ function Register() {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
+    const [shakeError, setShakeError] = useState(false);
+
     const { register } = useAuth();
 
     const navigate = useNavigate();
@@ -20,6 +22,8 @@ function Register() {
 
         if (password !== confirmPassword) {
             setError({ error: "Passwords do not match" });
+            setShakeError(true);
+            setTimeout(() => setShakeError(false), 500);
             setIsLoading(false);
             return;
         }
@@ -29,29 +33,38 @@ function Register() {
             navigate("/login");
         } else {
             setError(result.error);
+            setShakeError(true);
+            setTimeout(() => setShakeError(false), 500);
         }
         setIsLoading(false);
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-white to-green-100">
-            <div className="w-full lg:w-[480px] px-14 space-y-8 bg-white text-gray-800 flex flex-col py-10">
+        <div
+            className="min-h-screen flex flex-col md:flex-row-reverse items-center justify-center bg-white
+"
+        >
+            <div className="w-full lg:w-[480px] px-14 space-y-8 bg-transparent text-gray-800 flex flex-col py-6">
                 <div>
                     <div className="text-center">
                         <div className="inline-flex items-center justify-center w-12 h-12">
-                            <img src="/assets/clork-logo-green.png" alt="" />
+                            <img src="/assets/clork-logo-black.png" alt="" />
                         </div>
                         <h1 className="mt-2 text-2xl font-bold text-gray-800">
                             Create your account
                         </h1>
-                        <p className="mt-2 text-gray-600">
+                        <p className="mt-2 mb-2 text-gray-600">
                             Join Clork and start chatting
                         </p>
                     </div>
 
                     {error && (
-                        <div className="p-3 text-sm text-red-600 bg-red-50 rounded-md">
-                            {error.error}
+                        <div
+                            className={`p-3 text-sm text-red-600 bg-red-50 rounded-md relative transition-all ${
+                                shakeError ? "animate-shake" : ""
+                            }`}
+                        >
+                            {error.error || "Unknown error."}
                         </div>
                     )}
 
@@ -67,7 +80,7 @@ function Register() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-800"
+              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-neutral-bg-neutral-900 focus:border-neutral-bg-neutral-900 text-gray-800"
               placeholder="Your name"
             />
           </div> */}
@@ -135,7 +148,7 @@ function Register() {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full flex justify-center mt-2 py-2 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none disabled:opacity-50"
+                                className="w-full cursor-pointer flex justify-center mt-2 py-2 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-neutral-800 hover:bg-neutral-900 focus:outline-none disabled:opacity-50"
                             >
                                 {isLoading
                                     ? "Creating account..."
@@ -144,12 +157,12 @@ function Register() {
                         </div>
                     </form>
 
-                    <div className="text-center mt-2">
+                    <div className="text-center mt-4">
                         <p className="text-sm text-gray-600">
                             Already have an account?{" "}
                             <Link
                                 to="/login"
-                                className="font-medium text-green-600 hover:text-green-500"
+                                className="font-medium text-neutral-700 hover:text-neutral-900"
                             >
                                 Sign in
                             </Link>
@@ -158,7 +171,16 @@ function Register() {
                 </div>
             </div>
 
-            <div className="hidden lg:block relative flex-1 h-screen bg-[url('/assets/pic-1.jpg')] bg-cover rounded-2xl"></div>
+            <div
+                className="relative flex-1 h-screen animate-gradient bg-gradient-to-r from-orange-400 via-red-600 to-pink-400 bg-[size:200%_200%]
+rounded-2xl"
+            >
+                <div className="flex justify-center items-center w-full h-full">
+                    <h1 className="text-6xl text-white text-center">
+                        Your data is protected. We never share your information.
+                    </h1>
+                </div>
+            </div>
         </div>
     );
 }

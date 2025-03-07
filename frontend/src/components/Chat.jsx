@@ -258,7 +258,8 @@ function Chat() {
                             <div className="flex mb-2">
                                 <div className="bg-red-50 p-3 rounded-lg max-w-[80%] border border-red-200">
                                     <p className="text-gray-600">
-                                        {error.data.error}
+                                        {error.data.error ||
+                                            "Unknown error. Try to login again."}
                                     </p>
                                     <p className="text-gray-600">
                                         {error.statusText}

@@ -11,6 +11,8 @@ function Login() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
+    const [shakeError, setShakeError] = useState(false);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
@@ -21,17 +23,19 @@ function Login() {
             navigate("/chat");
         } else {
             setError(result.error);
+            setShakeError(true);
+            setTimeout(() => setShakeError(false), 500);
         }
         setIsLoading(false);
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-white to-blue-100">
-            <div className="w-full lg:w-[480px] flex flex-col px-14 py-10 space-y-8 bg-white text-gray-800">
+        <div className="min-h-screen flex flex-col md:flex-row-reverse items-center justify-center bg-white">
+            <div className="w-full lg:w-[480px] flex flex-col px-14 py-10 space-y-8 bg-transparent text-gray-800">
                 <div>
                     <div className="text-center">
                         <div className="inline-flex items-center justify-center w-12 h-12">
-                            <img src="/assets/clork-logo-blue.png" alt="" />
+                            <img src="/assets/clork-logo-black.png" alt="" />
                         </div>
                         <h1 className="mt-2 text-2xl font-bold text-gray-800">
                             Welcome to Clork
@@ -42,8 +46,12 @@ function Login() {
                     </div>
 
                     {error && (
-                        <div className="p-3 text-sm text-red-600 bg-red-50 rounded-md">
-                            {error.detail}
+                        <div
+                            className={`p-3 text-sm text-red-600 bg-red-50 rounded-md transition-all relative ${
+                                shakeError ? "animate-shake" : ""
+                            }`}
+                        >
+                            {error.detail || "Unknown error."}
                         </div>
                     )}
 
@@ -90,7 +98,7 @@ function Login() {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none disabled:opacity-50"
+                                className="w-full cursor-pointer flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-neutral-800 hover:bg-neutral-900 focus:outline-none disabled:opacity-50"
                             >
                                 {isLoading ? "Signing in..." : "Sign in"}
                             </button>
@@ -102,7 +110,7 @@ function Login() {
                             Don't have an account?{" "}
                             <Link
                                 to="/register"
-                                className="font-medium text-blue-600 hover:text-blue-500"
+                                className="font-medium text-neutral-700 hover:text-neutral-900"
                             >
                                 Sign up
                             </Link>
@@ -110,7 +118,17 @@ function Login() {
                     </div>
                 </div>
             </div>
-            <div className="hidden lg:block relative flex-1 h-screen bg-[url('/assets/pic-2.jpg')] bg-cover rounded-2xl"></div>
+            <div
+                className="relative flex-1 h-screen animate-gradient bg-gradient-to-r from-orange-400 via-red-600 to-pink-400 bg-[size:200%_200%]
+rounded-2xl"
+            >
+                <div className="flex justify-center items-center w-full h-full">
+                    <h1 className="text-6xl text-white text-center">
+                        Experience the power of AI conversations. Instant,
+                        insightful, and always available!
+                    </h1>
+                </div>
+            </div>
         </div>
     );
 }
