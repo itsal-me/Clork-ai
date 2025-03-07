@@ -151,7 +151,7 @@ function Chat() {
             {/* Chat container */}
             <div className="flex-1 overflow-y-auto p-4">
                 {messages.length === 0 ? (
-                    <div className="w-[calc(100%-60px)] mx-auto h-[calc(100%*2)]] flex flex-col items-center justify-center text-center">
+                    <div className="w-[calc(100%-50px)] mx-auto h-[calc(100%*2)]] flex flex-col items-center justify-center text-center">
                         <div className="p-4 mb-4">
                             <img
                                 src="/assets/clork-logo.png"
@@ -195,7 +195,7 @@ function Chat() {
                         </div>
                     </div>
                 ) : (
-                    <div className="space-y-4 w-[calc(100%-60px)] mx-auto">
+                    <div className="space-y-4 w-[calc(100%-50px)] mx-auto">
                         {messages.map((message) => (
                             <div key={message.id} className="flex flex-col">
                                 {message.user ? (
@@ -211,7 +211,7 @@ function Chat() {
                                     </div>
                                 ) : (
                                     <div className="flex mb-2">
-                                        <div className="bg-white text-gray-800 p-3 rounded-lg rounded-tl-none max-w-[80%] shadow-sm relative group border border-purple-200">
+                                        <div className="bg-white text-gray-800 p-3 rounded-lg rounded-tl-none max-w-[94%] shadow-sm relative group border border-purple-200">
                                             <p className="whitespace-pre-wrap">
                                                 {message.chat}
                                             </p>
@@ -273,7 +273,7 @@ function Chat() {
             </div>
 
             {/* Input area */}
-            <div className="w-[calc(100%-40px)] mx-auto rounded-xl mb-6 shadow-lg p-4 border-t border-purple-200 bg-white">
+            <div className="w-[calc(100%-20px)] lg:w-[calc(100%-80px)] mx-auto rounded-xl mb-6 shadow-lg p-4 border-t border-purple-200 bg-white">
                 <form
                     onSubmit={handleSend}
                     className="flex items-center space-x-2"
@@ -290,7 +290,7 @@ function Chat() {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Ask Clork anything..."
-                            className="w-full p-3 pr-12 rounded-full border border-purple-300 focus:outline-none bg-white text-gray-800 placeholder-gray-500"
+                            className="w-full p-3 rounded-full border border-purple-300 focus:outline-none bg-white text-gray-800 placeholder-gray-500"
                             disabled={isLoading}
                         />
                     </div>
