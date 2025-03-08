@@ -94,7 +94,7 @@ function Chat() {
                 highlight: function (code, lang) {
                     return hljs.highlightAuto(code).value; // Auto-detect language
                 },
-                breaks: true, // Enable line breaks
+                breaks: false, // Enable line breaks
                 gfm: true, // GitHub Flavored Markdown
             });
 
@@ -214,7 +214,7 @@ function Chat() {
                             <div key={message.id} className="flex flex-col">
                                 {message.user ? (
                                     <div className="flex justify-end mb-2">
-                                        <div className="bg-purple-500 text-white p-3 rounded-lg rounded-tr-none max-w-[80%]">
+                                        <div className="bg-purple-600 text-white p-3 rounded-lg rounded-tr-none max-w-[80%]">
                                             <p>{message.user}</p>
                                             <div className="text-xs text-purple-100 mt-1 text-right">
                                                 {formatTimestamp(
@@ -234,6 +234,10 @@ function Chat() {
                                                     ),
                                                 }}
                                             ></div>
+
+                                            {/* <p className="whitespace-pre-wrap">
+                                                {message.chat}
+                                            </p> */}
                                             <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <button
                                                     onClick={() =>
