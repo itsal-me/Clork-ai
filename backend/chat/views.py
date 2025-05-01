@@ -75,52 +75,101 @@ class CustomTokenRefreshView(TokenRefreshView):
         return response
 
 
+# class ChatView(APIView):
+#     permission_classes = [IsAuthenticated]
+    
+#     def post(self, request):
+#         user_input = request.data.get('user_input')
+#         if not user_input:
+#             return JsonResponse({'error': 'User input is required'}, status=400)
+
+
+#         openrouter_api_key = os.getenv('OPENROUTER_API_KEY')
+
+#         response = requests.post(
+#         url=os.getenv('OPENROUTER_API_URL'),
+#         headers={
+#             "Authorization": f"Bearer {openrouter_api_key}",
+#             "Content-Type": "application/json",
+#         },
+#         data=json.dumps({
+#             "model": "deepseek/deepseek-r1:free",
+#             "messages": [
+#             {
+#                 "role": "user",
+#                 "content": user_input
+#             }
+#             ],
+            
+#         })
+#         )
+        
+#         try:
+
+#             chat_response = response.json()['choices'][0]['message']['content']
+            
+#             if not chat_response:
+#                 return JsonResponse({'error': 'No response from the model'}, status=500)
+
+#         except requests.exceptions.RequestException as e:
+   
+#             return JsonResponse({'error': str(e)}, status=500)
+
+#         Chat.objects.create(user=request.user, user_input=user_input, chat_response=chat_response)
+
+#         return JsonResponse({'chat_response': chat_response}, status=status.HTTP_200_OK)
+
+        
 class ChatView(APIView):
     permission_classes = [IsAuthenticated]
-    
+
     def post(self, request):
         user_input = request.data.get('user_input')
         if not user_input:
             return JsonResponse({'error': 'User input is required'}, status=400)
 
+        formatted_prompt = (
+            "You are a movie expert. Only identify film dialogues.\n"
+            "If the dialogue is from a TV series or unknown, respond exactly with: 'Dialogue not found'.\n\n"
+            f"Dialogue: \"{user_input}\"\nAnswer:"
+        )
 
         openrouter_api_key = os.getenv('OPENROUTER_API_KEY')
 
         response = requests.post(
-        url=os.getenv('OPENROUTER_API_URL'),
-        headers={
-            "Authorization": f"Bearer {openrouter_api_key}",
-            "Content-Type": "application/json",
-        },
-        data=json.dumps({
-            "model": "deepseek/deepseek-r1:free",
-            "messages": [
-            {
-                "role": "user",
-                "content": user_input
-            }
-            ],
-            
-        })
+            url=os.getenv('OPENROUTER_API_URL'),
+            headers={
+                "Authorization": f"Bearer {openrouter_api_key}",
+                "Content-Type": "application/json",
+            },
+            data=json.dumps({
+                "model": "deepseek/deepseek-r1:free",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": formatted_prompt
+                    }
+                ]
+            })
         )
-        
-        try:
 
-            chat_response = response.json()['choices'][0]['message']['content']
-            
+        try:
+            chat_response = response.json()['choices'][0]['message']['content'].strip()
             if not chat_response:
                 return JsonResponse({'error': 'No response from the model'}, status=500)
-
-        except requests.exceptions.RequestException as e:
-   
+        except (requests.exceptions.RequestException, KeyError) as e:
             return JsonResponse({'error': str(e)}, status=500)
 
+        # Save to DB
         Chat.objects.create(user=request.user, user_input=user_input, chat_response=chat_response)
 
-        return JsonResponse({'chat_response': chat_response}, status=status.HTTP_200_OK)
+        if chat_response.strip().lower() == "dialogue not found":
+            chat_response = (
+                "Sorry, I couldn't identify this dialogue as part of any known film. "
+                "It may belong to a TV series or is not widely recognized in film history."
+            )
 
-        
-
+        return JsonResponse({'chat_response': chat_response}, status=200)
 
 class ChatHistoryView(APIView):
     permission_classes = [IsAuthenticated]
