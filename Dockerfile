@@ -25,4 +25,4 @@ COPY backend/ ./
 COPY --from=frontend-build /app/frontend/dist /app/frontend_dist/
 
 # Start Gunicorn server
-CMD ["gunicorn", "--chdir", ".", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["python manage.py makemigrations && python manage.py migrate && gunicorn", "--chdir", ".", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
