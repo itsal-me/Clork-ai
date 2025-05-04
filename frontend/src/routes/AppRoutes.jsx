@@ -6,6 +6,9 @@ import Chat from "../components/Chat";
 import AdminDashboard from "../components/AdminDashboard";
 import UserChatHistory from "../components/UserChatHistory";
 import { Loader2 } from "lucide-react";
+import Marks from "../components/Marks";
+import AllRoute from "../components/AllRoute";
+import Info from "../components/Info";
 
 const AppRoutes = () => {
     const { isAuthenticated, loading, isAdmin } = useAuth();
@@ -28,9 +31,16 @@ const AppRoutes = () => {
                     {/* User's own chat history */}
                     <Route path="/history" element={<UserChatHistory />} />
 
+                    <Route path="/marks" element={<Marks />} />
+
+                    <Route path="/info" element={<Info />} />
+
                     {/* Admin-only routes */}
                     {isAdmin && (
-                        <Route path="/admin" element={<AdminDashboard />} />
+                        <>
+                            <Route path="/admin" element={<AdminDashboard />} />
+                            <Route path="/all-link" element={<AllRoute />} />
+                        </>
                     )}
 
                     {/* Default redirects */}
