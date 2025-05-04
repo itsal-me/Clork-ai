@@ -111,15 +111,14 @@ TEMPLATES = [
 ]
 
 
+APP_DIR = os.path.dirname(BASE_DIR)  # /app
 
-MAIN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-REACT_APP_DIR = os.path.join(MAIN_DIR, '../frontend_dist')
+REACT_APP_DIR = os.path.join(APP_DIR, 'frontend_dist')  # /app/frontend_dist
 
 TEMPLATES[0]['DIRS'] = [REACT_APP_DIR]
 
-# Serve files from frontend_dist
 STATICFILES_DIRS = [
-    os.path.join(REACT_APP_DIR),  # Vite usually outputs to /assets
+    REACT_APP_DIR,
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
