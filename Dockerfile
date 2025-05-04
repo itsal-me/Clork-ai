@@ -24,5 +24,6 @@ COPY backend/ ./
 # Copy built frontend files (optional: served by Django manually or via nginx)
 COPY --from=frontend-build /app/frontend/dist /app/frontend_dist/
 
+
 # Start Gunicorn server
 CMD ["sh", "-c", "python manage.py makemigrations && python manage.py migrate && exec gunicorn backend.wsgi:application --bind 0.0.0.0:8000"]

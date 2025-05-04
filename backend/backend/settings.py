@@ -111,11 +111,9 @@ TEMPLATES = [
 ]
 
 
-APP_DIR = os.path.dirname(BASE_DIR)  # /app
+REACT_APP_DIR = os.path.join(os.path.dirname(BASE_DIR), "frontend_dist")
+TEMPLATES[0]["DIRS"] = [REACT_APP_DIR]
 
-REACT_APP_DIR = os.path.join(APP_DIR, 'frontend_dist')  # /app/frontend_dist
-
-TEMPLATES[0]['DIRS'] = [REACT_APP_DIR]
 
 STATICFILES_DIRS = [
     REACT_APP_DIR,
