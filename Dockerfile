@@ -2,7 +2,7 @@
 FROM node:18 AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/ ./
-RUN npm install && npm run build
+RUN npm install -g npm@11.3.0 && npm run build
 
 # --------- Stage 2: Backend (Django) ---------
 FROM python:3.10-slim
