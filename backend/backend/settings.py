@@ -14,7 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 import os
-import dj_database_url
+
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -108,6 +108,18 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+
+
+MAIN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+REACT_APP_DIR = os.path.join(MAIN_DIR, '../frontend_dist')
+
+TEMPLATES[0]['DIRS'] = [REACT_APP_DIR]
+
+# Serve files from frontend_dist
+STATICFILES_DIRS = [
+    os.path.join(REACT_APP_DIR, 'assets'),  # Vite usually outputs to /assets
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
