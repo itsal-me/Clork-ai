@@ -94,11 +94,14 @@ CORS_ALLOWED_ORIGINS = [
 
 ROOT_URLCONF = 'backend.urls'
 
+
+REACT_APP_DIR = os.path.join(BASE_DIR, "frontend_dist")
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [REACT_APP_DIR],
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -110,9 +113,6 @@ TEMPLATES = [
     },
 ]
 
-
-REACT_APP_DIR = os.path.join(os.path.dirname(BASE_DIR), "frontend_dist")
-TEMPLATES[0]["DIRS"] = [REACT_APP_DIR]
 
 
 STATICFILES_DIRS = [
@@ -189,6 +189,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

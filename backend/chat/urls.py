@@ -7,9 +7,11 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,  # For verifying tokens
 )
 
-from chat.views import CustomTokenObtainPairView, CustomTokenRefreshView, UserListView, UserDeleteView, AdminStatsView
+from chat.views import CustomTokenObtainPairView, CustomTokenRefreshView, UserListView, UserDeleteView, AdminStatsView, FrontendAppView
 
 urlpatterns = [
+    path('', FrontendAppView.as_view(), name='frontend'),
+
     path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', views.LogoutView.as_view(), name='logout'),

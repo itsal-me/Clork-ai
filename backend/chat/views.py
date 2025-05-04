@@ -18,9 +18,18 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.tokens import AccessToken
 
+from django.views.generic import TemplateView
+
+
 from django.utils import timezone
 import logging
 logger = logging.getLogger(__name__)
+
+
+
+class FrontendAppView(TemplateView):
+    template_name = 'index.html'
+
 
 class RegisterView(APIView):
     def post(self, request):
