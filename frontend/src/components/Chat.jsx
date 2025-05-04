@@ -186,7 +186,7 @@ function Chat() {
                         </p>
 
                         {/* Suggestion cards */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl">
+                        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl">
                             {suggestions.map((suggestion) => (
                                 <button
                                     key={suggestion.id}
@@ -206,7 +206,7 @@ function Chat() {
                                     </p>
                                 </button>
                             ))}
-                        </div>
+                        </div> */}
                     </div>
                 ) : (
                     <div className="space-y-4 w-[calc(100%-60px)] max-sm:w-[calc(100%-30px)] mx-auto">

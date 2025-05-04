@@ -19,7 +19,12 @@ function Login() {
         setIsLoading(true);
 
         const result = await login(username, password);
-        if (result.success) {
+        if (result.success && localStorage.getItem("is_admin") === "true") {
+            navigate("/admin");
+        } else if (
+            result.success &&
+            localStorage.getItem("is_admin") === "false"
+        ) {
             navigate("/chat");
         } else {
             setError(result.error);
