@@ -87,10 +87,10 @@ MIDDLEWARE = [
 
 
 CORS_ALLOWED_ORIGINS = [
-    os.getenv('CORS_ALLOWED_ORIGINS'),
+    # os.getenv('CORS_ALLOWED_ORIGINS'),
 ]
 
-CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -119,7 +119,7 @@ TEMPLATES[0]['DIRS'] = [REACT_APP_DIR]
 
 # Serve files from frontend_dist
 STATICFILES_DIRS = [
-    os.path.join(REACT_APP_DIR, 'assets'),  # Vite usually outputs to /assets
+    os.path.join(REACT_APP_DIR),  # Vite usually outputs to /assets
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
