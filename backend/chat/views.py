@@ -90,8 +90,8 @@ class ChatView(APIView):
             return JsonResponse({'error': 'User input is required'}, status=400)
 
         formatted_prompt = (
-            "You are a movie expert. Only identify film dialogues.\n"
-            "If the dialogue is from a TV series or unknown, respond exactly with: 'Dialogue not found'.\n\n"
+            "You are a non English language movie expert. Only identify non English language movie dialogues.\n"
+            "If the dialogue is from an English TV series or movie, respond exactly with: 'Dialogue not found'.\n\n"
             f"Dialogue: \"{user_input}\"\nAnswer:"
         )
 
@@ -126,8 +126,8 @@ class ChatView(APIView):
 
         if chat_response.strip().lower() == "dialogue not found":
             chat_response = (
-                "Sorry, I couldn't identify this dialogue as part of any known film. "
-                "It may belong to a TV series or is not widely recognized in film history."
+                "Sorry, I couldn't identify this dialogue as part of any known Non English Movie. "
+                "It may belong to an English Language TV series, movie or is not widely recognized in Non English Movies."
             )
 
         return JsonResponse({'chat_response': chat_response}, status=200)

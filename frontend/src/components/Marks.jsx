@@ -8,7 +8,7 @@ const Marks = () => {
     useEffect(() => {
         const data = [
             {
-                mark: "5",
+                mark: "1",
                 justification:
                     "Added admin section to view all users, can manage them, follow stats",
                 internal: "/admin",
@@ -20,7 +20,7 @@ const Marks = () => {
                 internal: "/history",
             },
             {
-                mark: "5",
+                mark: "9",
                 justification:
                     "Filter the model response, it will response if only user asked for any Film script. Otherwise it will not respond.",
                 internal: "/chat",
